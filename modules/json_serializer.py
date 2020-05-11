@@ -13,6 +13,11 @@ class JSONSerializer():
         if re.search(r'classes.', class_type):
             objects = dict()
             objects.update(class_object.__dict__)
+            for i in range(len(class_object.__dir__())):
+                if not class_object.__dir__()[i].startswith('__') and not class_object.__dir__()[i].endswith('__'):
+                    default_objects = class_object.__dir__()[i]
+                    if default_objects not in class_object.__dict__.keys():
+                        objects[F'{default_objects}'] = class_object.__getattribute__(F'{default_objects}')
             for j, key in zip(objects.values(), objects.keys()):
                 if re.search(r'classes.', str(j)):
                     for i in range(len(j)):
