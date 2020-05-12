@@ -1,6 +1,7 @@
 """ Module for json-serializer """
 import re
 import os
+import random
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 class JSONSerializer():
@@ -50,9 +51,21 @@ class JSONSerializer():
         objects = JSONSerializer.__change_type(objects)
         objects = JSONSerializer.__to_str(objects)
         if file_name:
-            my_file = os.path.join(THIS_FOLDER, r'..\output\{}.json'.format(file_name))
+            if str(class_object.__class__.__name__) + str(id(class_object))\
+            in os.listdir(path=rf'f:\Projects\json_serializer\output'):
+                my_file = os.path.join(THIS_FOLDER,\
+                rf'..\output\{file_name}.json')
+            else:
+                my_file = os.path.join(THIS_FOLDER,\
+                rf'..\output\{file_name}{random.random(0, 10000000)}.json')
         else:
-            my_file = os.path.join(THIS_FOLDER, r'..\output\{}{}.json'.format(class_object.__class__.__name__, id(class_object)))
+            if str(class_object.__class__.__name__) + str(id(class_object))\
+            in os.listdir(path=rf'f:\Projects\json_serializer\output'):
+                my_file = os.path.join(THIS_FOLDER,\
+                rf'..\output\{class_object.__class__.__name__}{id(class_object)}{random.random(0, 10000000)}.json')
+            else:
+                my_file = os.path.join(THIS_FOLDER,\
+                rf'..\output\{class_object.__class__.__name__}{id(class_object)}.json')
         file = open(r'{}'.format(my_file), 'w')
         file.write(objects)
         if file_name:
