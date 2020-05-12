@@ -1,6 +1,7 @@
 """ Module for using json_serializer """
 from modules.json_serializer import JSONSerializer
 from classes.example import Person
+import json
 
 first = Person(1, "Jack")
 second = Person(2, "Jill")
@@ -10,4 +11,8 @@ first.children.append(second)
 first.children.append(third)
 third.children.append(fourth)
 JSONSerializer.serialize(first, 'Jack')
-#JSONSerializer.serialize(first, "JackVolkov")
+with open(r'output\Aleks.json') as f:
+    templates = json.load(f)
+print(templates)
+f.close()
+print(type(templates))

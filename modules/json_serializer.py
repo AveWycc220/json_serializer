@@ -32,7 +32,7 @@ class JSONSerializer():
             return objects
         else:
             print("Classes must be in folder : 'classes', else wrong input")
-            
+
     @staticmethod
     def __change_type(objects):
         """ Method for change wrong type of .json """
@@ -50,6 +50,12 @@ class JSONSerializer():
         objects = JSONSerializer.__get_objects(class_object)
         objects = JSONSerializer.__change_type(objects)
         objects = JSONSerializer.__to_str(objects)
+        JSONSerializer.__output(class_object, objects, file_name)
+        return objects
+
+    @staticmethod
+    def __output(class_object, objects, file_name):
+        """  Output in .json file """
         fix = random.randint(0, 10000000)
         if file_name:
             if str(file_name) + '.json'\
@@ -74,7 +80,6 @@ class JSONSerializer():
         else:
             print(F'File {class_object.__class__.__name__}{id(class_object)}{fix}.json created.')
         file = file.close
-        return objects
 
     @staticmethod
     def __to_str(objects):
