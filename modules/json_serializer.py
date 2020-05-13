@@ -17,9 +17,10 @@ class JSONSerializer():
             objects = dict()
             objects.update(class_object.__dict__)
             for i in range(len(class_object.__dir__())):
-                if not class_object.__dir__()[i].startswith('__') and not class_object.__dir__()[i].endswith('__'):
+                if not class_object.__dir__()[i].startswith('__'):
                     default_objects = class_object.__dir__()[i]
-                    if default_objects not in class_object.__dict__.keys():
+                    if default_objects not in class_object.__dict__.keys() and\
+                    not str(class_object.__getattribute__(F'{default_objects}')).startswith('<bound method'):
                         objects[F'{default_objects}'] = class_object.__getattribute__(F'{default_objects}')
             for j, key in zip(objects.values(), objects.keys()):
                 if re.search(r'classes.', str(j)):
