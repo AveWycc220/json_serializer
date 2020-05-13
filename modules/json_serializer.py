@@ -7,7 +7,7 @@ THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 class JSONSerializer():
     """ Class of json-serializer """
     @staticmethod
-    def __get_objects(class_object):
+    def __get_objects(class_object, id_last_objects=None):
         """
         Method for getting objects in class
         Classes must be in folder : 'classes'
@@ -23,13 +23,16 @@ class JSONSerializer():
                     not str(class_object.__getattribute__(F'{default_objects}')).startswith('<bound method'):
                         objects[F'{default_objects}'] = class_object.__getattribute__(F'{default_objects}')
             for j, key in zip(objects.values(), objects.keys()):
-                if re.search(r'classes.', str(j)):
+                if bool(re.search(r'classes.', str(j))) or bool(re.search(r'classes.', str(type(j)))):
                     if isinstance(objects[key], (list, tuple, set, frozenset)):
                         objects[key] = list(objects[key])
                         for i in range(len(j)):
                             objects[key][i] = (JSONSerializer.__get_objects(j[i]))
                     else:
-                        objects[key] = (JSONSerializer.__get_objects(j))
+                        if id(j) != id_last_objects:
+                            objects[key] = (JSONSerializer.__get_objects(j, id(class_object)))
+                        else:
+                            objects[key] = 'Outer ' + str(class_object.__class__.__name__)
             return objects
         else:
             print("Classes must be in folder : 'classes', else wrong input")
@@ -74,20 +77,20 @@ class JSONSerializer():
             else:
                 my_file = os.path.join(THIS_FOLDER,\
                 rf'..\output\{class_object.__class__.__name__}{id(class_object)}.json')
-        file = open(r'{}'.format(my_file), 'w')
-        file.write(objects)
         if file_name:
             if str(file_name) + '.json'\
             in os.listdir(path=rf'f:\Projects\json_serializer\output'):
                 print(F'File {file_name}{fix}.json created.')
             else:
-                print(F'File {file_name}{fix}.json created.')
+                print(F'File {file_name}.json created.')
         else:
             if str(class_object.__class__.__name__) + str(id(class_object)) + '.json'\
             in os.listdir(path=rf'f:\Projects\json_serializer\output'):
                 print(F'File {class_object.__class__.__name__}{id(class_object)}{fix}.json created.')
-            else: 
+            else:
                 print(F'File {class_object.__class__.__name__}{id(class_object)}.json created.')
+        file = open(r'{}'.format(my_file), 'w')
+        file.write(objects)
         file = file.close
 
     @staticmethod
