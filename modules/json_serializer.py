@@ -6,6 +6,16 @@ import random
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 class JSONSerializer():
     """ Class of json-serializer """
+
+    @staticmethod
+    def serialize(class_object, file_name=None):
+        """ Method for output objects in .json """
+        objects = JSONSerializer.__get_objects(class_object)
+        objects = JSONSerializer.__change_type(objects)
+        objects = JSONSerializer.__to_str(objects)
+        JSONSerializer.__output(class_object, objects, file_name)
+        return objects
+
     @staticmethod
     def __get_objects(class_object, id_last_objects=None):
         """
@@ -52,15 +62,6 @@ class JSONSerializer():
             if isinstance(objects[key], list) and bool(re.search(r'classes.', str(objects[key]))):
                 for i, _ in enumerate(objects[key]):
                     JSONSerializer.__change_type(objects[key][i])
-        return objects
-
-    @staticmethod
-    def serialize(class_object, file_name=None):
-        """ Method for output objects in .json """
-        objects = JSONSerializer.__get_objects(class_object)
-        objects = JSONSerializer.__change_type(objects)
-        objects = JSONSerializer.__to_str(objects)
-        JSONSerializer.__output(class_object, objects, file_name)
         return objects
 
     @staticmethod
