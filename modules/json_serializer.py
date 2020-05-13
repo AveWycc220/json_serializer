@@ -62,30 +62,31 @@ class JSONSerializer():
         """  Output in .json file """
         fix = random.randint(0, 10000000)
         if file_name:
-            if str(file_name) + '.json'\
-            in os.listdir(path=rf'f:\Projects\json_serializer\output'):
+            file_exists = str(file_name) + '.json' in os.listdir(path=rf'f:\Projects\json_serializer\output')
+        else:
+            file_exists = str(class_object.__class__.__name__) + str(id(class_object)) + '.json'\
+            in os.listdir(path=rf'f:\Projects\json_serializer\output')
+        if file_name:
+            if file_exists:
                 my_file = os.path.join(THIS_FOLDER,\
                 rf'..\output\{file_name}{fix}.json')
             else:
                 my_file = os.path.join(THIS_FOLDER,\
                 rf'..\output\{file_name}.json')
         else:
-            if str(class_object.__class__.__name__) + str(id(class_object)) + '.json'\
-            in os.listdir(path=rf'f:\Projects\json_serializer\output'):
+            if file_exists:
                 my_file = os.path.join(THIS_FOLDER,\
                 rf'..\output\{class_object.__class__.__name__}{id(class_object)}{fix}.json')
             else:
                 my_file = os.path.join(THIS_FOLDER,\
                 rf'..\output\{class_object.__class__.__name__}{id(class_object)}.json')
         if file_name:
-            if str(file_name) + '.json'\
-            in os.listdir(path=rf'f:\Projects\json_serializer\output'):
+            if file_exists:
                 print(F'File {file_name}{fix}.json created.')
             else:
                 print(F'File {file_name}.json created.')
         else:
-            if str(class_object.__class__.__name__) + str(id(class_object)) + '.json'\
-            in os.listdir(path=rf'f:\Projects\json_serializer\output'):
+            if file_exists:
                 print(F'File {class_object.__class__.__name__}{id(class_object)}{fix}.json created.')
             else:
                 print(F'File {class_object.__class__.__name__}{id(class_object)}.json created.')
