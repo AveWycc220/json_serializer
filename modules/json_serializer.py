@@ -26,13 +26,19 @@ class JSONSerializer():
                 if bool(re.search(r'classes.', str(j))) or bool(re.search(r'classes.', str(type(j)))):
                     if isinstance(objects[key], (list, tuple, set, frozenset)):
                         objects[key] = list(objects[key])
-                        for i in range(len(j)):
-                            objects[key][i] = (JSONSerializer.__get_objects(j[i]))
+                        j = list(j)
+                        for i in range(len(objects[key])):
+                            if id(j) != id_last_objects:
+                                objects[key][i] = (JSONSerializer.__get_objects(j[i]))
+                            else:
+                                last_object_dict = list(j[i].__dict__)
+                                objects[key][i] = F'Object with {last_object_dict[0]} : {j.__dict__[last_object_dict[0]]}'
                     else:
                         if id(j) != id_last_objects:
                             objects[key] = (JSONSerializer.__get_objects(j, id(class_object)))
                         else:
-                            objects[key] = 'Outer ' + str(class_object.__class__.__name__)
+                            last_object_dict = list(j.__dict__)
+                            objects[key] = F'Object with {last_object_dict[0]} : {j.__dict__[last_object_dict[0]]}'
             return objects
         else:
             print("Classes must be in folder : 'classes', else wrong input")
@@ -43,7 +49,7 @@ class JSONSerializer():
         for key in objects.keys():
             if isinstance(objects[key], (tuple, set, frozenset)):
                 objects[key] = list(objects[key])
-            if isinstance(objects[key], list):
+            if isinstance(objects[key], list) and bool(re.search(r'classes.', str(objects[key]))):
                 for i, _ in enumerate(objects[key]):
                     JSONSerializer.__change_type(objects[key][i])
         return objects
@@ -101,6 +107,8 @@ class JSONSerializer():
         objects_str = objects_str.replace("'", '"')
         objects_str = objects_str.replace('None', 'null')
         objects_str = objects_str.replace(', ', ',')
+        objects_str = objects_str.replace('True', 'true')
+        objects_str = objects_str.replace('False', 'false')
         objects_str = JSONSerializer.__dict_str(objects_str)
         return objects_str
 
