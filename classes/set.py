@@ -1,8 +1,8 @@
 """ Module of set """
 import ast
 from accessify import implements
-from modules.set.interface_set import ISet
-from modules.tree.avl_tree import AVLTree
+from classes.interface_set import ISet
+from classes.avl_tree import AVLTree
 
 TYPES = {
     'int' : int,

@@ -1,5 +1,5 @@
 """ Module for elements in tree """
-from modules.tree.node import Node
+from classes.node import Node
 
 class AVLTree():
     """ Class of avl_tree. """
