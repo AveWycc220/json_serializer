@@ -13,12 +13,6 @@ first.children.append(second)
 first.children.append(third)
 print(first.__class__)
 JSONSerializer.serialize(first, 'Jack')
-# Check : Example
-with open(r'output\Aleks.json') as f:
-    templates = json.load(f)
-print(templates)
-f = f.close()
-print(type(templates))
 #Set
 set_on_avl_tree = Set('int')
 set_on_avl_tree.add('15')

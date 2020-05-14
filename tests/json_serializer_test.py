@@ -106,20 +106,20 @@ class TestJSONSerializer(unittest.TestCase):
         objects = JSONSerializer._JSONSerializer__change_type(objects)
         objects = JSONSerializer._JSONSerializer__to_str(objects)
         JSONSerializer._JSONSerializer__output(A, objects, file_name)
-        file_exists = str(file_name) + '.json' in os.listdir(path=rf'f:\Projects\json_serializer\output')
+        file_exists = str(file_name) + '.json' in os.listdir(path=rf'{THIS_FOLDER}\..\output')
         self.assertEqual(file_exists, True)
-        os.remove(path=rf'f:\Projects\json_serializer\output\{file_name}.json')
+        os.remove(path=rf'{THIS_FOLDER}\..\output\{file_name}.json')
         # Without file_name
         file_exists = False
         JSONSerializer._JSONSerializer__output(A, objects, None)
         file_exists = str(A.__class__.__name__) + str(id(A)) + '.json'\
-        in os.listdir(path=rf'f:\Projects\json_serializer\output')
+        in os.listdir(path=rf'{THIS_FOLDER}\..\output')
         self.assertEqual(file_exists, True)
-        os.remove(path=rf'f:\Projects\json_serializer\output\{A.__class__.__name__}{id(A)}.json')
+        os.remove(path=rf'{THIS_FOLDER}\..\output\{A.__class__.__name__}{id(A)}.json')
         # Wrong name for Windows
         file_exists = False
         JSONSerializer._JSONSerializer__output(A, objects, 'NUL')
-        file_exists = str(file_name) + '.json' in os.listdir(path=rf'f:\Projects\json_serializer\output')
+        file_exists = str(file_name) + '.json' in os.listdir(path=rf'{THIS_FOLDER}\..\output')
         self.assertEqual(file_exists, False)
 
     def test_serialize(self):
@@ -132,7 +132,7 @@ class TestJSONSerializer(unittest.TestCase):
             templates = json.load(f)
         f = f.close()
         self.assertEqual(objects, templates)
-        os.remove(path=rf'f:\Projects\json_serializer\output\A.json')
+        os.remove(path=rf'{THIS_FOLDER}\..\output\A.json')
 
     def tearDown(self):
         """ End """
