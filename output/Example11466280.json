@@ -1,0 +1,21 @@
+{
+	"int_t": 20,
+	"set_t": [
+	  {
+		"value": 100
+	  }
+	],
+	"none_t": null,
+	"float_t": 15.6,
+	"list_t": [],
+	"tuple_t": [
+	16,
+	18,
+	19,
+	20
+	],
+	"frozenset_t": [],
+	"booleanT": true,
+	"booleanF": false,
+	"get_int": 40
+}

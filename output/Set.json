@@ -1,0 +1,32 @@
+{
+	"_Set__tree": {
+		"_AVLTree__root": {
+			"value": 15,
+			"parent": null,
+			"right": {
+				"value": 167,
+				"parent": "<classes.node.Node object at 0x039F29B8>",
+				"right": {
+					"value": 200,
+					"parent": "<classes.node.Node object at 0x039F2700>",
+					"right": null,
+					"left": null,
+					"height": 0
+				},
+				"left": null,
+				"height": 1
+			},
+			"left": {
+				"value": 4,
+				"parent": "<classes.node.Node object at 0x039F29B8>",
+				"right": null,
+				"left": null,
+				"height": 0
+			},
+			"height": 2
+		},
+		"_AVLTree__node_count": 4,
+		"node_count": 4
+	},
+	"_Set__set_type": "int"
+}

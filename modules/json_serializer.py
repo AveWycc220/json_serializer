@@ -87,19 +87,26 @@ class JSONSerializer():
             else:
                 my_file = os.path.join(THIS_FOLDER,\
                 rf'..\output\{class_object.__class__.__name__}{id(class_object)}.json')
+        file = open(r'{}'.format(my_file), 'w')
         if file_name:
             if file_exists:
                 print(F'File {file_name}{fix}.json created.')
             else:
-                print(F'File {file_name}.json created.')
+                if str(file_name) + '.json' in os.listdir(path=rf'f:\Projects\json_serializer\output'):
+                    print(F'File {file_name}.json created.')
+                else: 
+                    print(F'File {file_name}.json NOT created.')
         else:
             if file_exists:
                 print(F'File {class_object.__class__.__name__}{id(class_object)}{fix}.json created.')
             else:
-                print(F'File {class_object.__class__.__name__}{id(class_object)}.json created.')
-        file = open(r'{}'.format(my_file), 'w')
+                if str(class_object.__class__.__name__) + str(id(class_object)) + '.json'\
+                in os.listdir(path=rf'f:\Projects\json_serializer\output'):
+                    print(F'File {class_object.__class__.__name__}{id(class_object)}.json created.')
+                else:
+                    print(F'File {class_object.__class__.__name__}{id(class_object)}.json NOT created.')
         file.write(objects)
-        file = file.close
+        file = file.close()
 
     @staticmethod
     def __to_str(objects):
@@ -115,36 +122,36 @@ class JSONSerializer():
 
     @staticmethod
     def __dict_str(objects_str):
-        """ Help __to_str to convert dictionary using recursion" """
+        """ Help __to_str to convert dictionary """
         count = 0
         count_object = 0
         count_array = 0
         temp_count = 0
-        for i, _ in enumerate(objects_str):
-            if _ == '{':
+        for i, item in enumerate(objects_str):
+            if item == '{':
                 objects_str = objects_str[0:i+count] + count_array * '  ' + '{\n\t'  + count_object*'\t'\
                 + objects_str[i+1+count: len(objects_str)]
                 count += 2 + (count_object * 1) + (count_array * 2)
                 count_object += 1
-            if _ == '}':
+            if item == '}':
                 count_object -= 1
                 objects_str = objects_str[0:i+count] +  '\n' + count_object*'\t' + count_array * '  ' + '}'\
                 + objects_str[i+1+count: len(objects_str)]
                 count += 1 + (count_object * 1) +  (count_array * 2)
-            if _ == ',':
+            if item == ',':
                 objects_str = objects_str[0:i+count] + ',\n' + count_object*'\t' + objects_str[i+1+count: len(objects_str)]
                 count += 1 + (count_object * 1)
-            if _ == '{' and objects_str[i+1] == '[':
+            if item == '{' and objects_str[i+1] == '[':
                 objects_str = objects_str[0:i+count] + count_object*'\t' + '\n{' + objects_str[i+1+count: len(objects_str)]
                 count += 1 + (count_object * 1)
-            if _ == '[' and objects_str[i+count+1] != ']':
+            if item == '[' and objects_str[i+count+1] != ']':
                 objects_str = objects_str[0:i+count] + '[\n' + count_object*'\t' + objects_str[i+1+count: len(objects_str)]
                 if count_array != 1:
                     count_array += 1
                 else:
                     temp_count += 1
                 count += 1 + (count_object * 1)
-            if _ == ']' and objects_str[i+count-1] != '[':
+            if item == ']' and objects_str[i+count-1] != '[':
                 if count_array == 1 and temp_count == 0:
                     count_array -= 1
                 else:
